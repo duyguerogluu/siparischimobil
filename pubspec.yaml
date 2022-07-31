@@ -36,6 +36,11 @@ dependencies:
   google_maps_flutter:
   font_awesome_flutter:
   image_picker: ^0.8.5
+  flutter_custom_clippers: ^2.0.0
+  badges:
+  flutter_spinkit: ^5.1.0
+  flutter_walkthrough_screen:
+  carousel_slider: ^4.1.1 
 
 dev_dependencies:
   flutter_test:
@@ -80,9 +85,12 @@ flutter:
     - assets/images/siparischi-logos_transparent.png
     - assets/images/siparischi-logos_white.png
     - assets/images/siparischi-logos_black.png
-    - assets/images/siparischi-logos_black2.png
-    - assets/images/duygu.jpg
     - assets/images/default.jpg
+    - assets/images/sepet.png
+    - assets/images/teslimat.png
+    - assets/images/mavitik.png
+    - assets/images/duygu.jpg
+    
   fonts:
     - family: poppins_light
       fonts:

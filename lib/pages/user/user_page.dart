@@ -1,22 +1,32 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:siparischi/decoration/colors.dart';
+import 'package:siparischi/pages/location/location_page.dart';
 import 'package:siparischi/pages/login_page.dart';
 import 'package:siparischi/pages/user/address_page.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:siparischi/pages/user/home_page_router.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
 
   static String token = "", id = "";
-
+  static String location = "";
   @override
   State<UserPage> createState() => _UserPageState();
 }
 
 class _UserPageState extends State<UserPage> {
+  static const LatLng _center = LatLng(36.888, 34.666);
+  bool refresh = true;
+  String pointValue = "0";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 40,
         leading: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -24,11 +34,11 @@ class _UserPageState extends State<UserPage> {
                 quarterTurns: 2,
                 child: IconButton(
                   icon: Icon(
-                    Icons.exit_to_app,
-                    color: white,
+                    Icons.arrow_forward,
+                    color: green,
                   ),
                   onPressed: () {
-                    showDialog(
+                    /* showDialog(
                       barrierDismissible: false,
                       context: context,
                       builder: (context) => AlertDialog(
@@ -122,101 +132,210 @@ class _UserPageState extends State<UserPage> {
                         ),
                       ),
                     );
+                 */
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const HomePageRouter(),
+                      ),
+                      (route) => false,
+                    );
                   },
                 ),
               )
             ]),
-        backgroundColor: green,
-        centerTitle: true,
-        title: Text(
-          "Siparischi",
-          style: TextStyle(color: white, fontFamily: "poppins-bold"),
-        ),
-        actions: [
-          PopupMenuButton<int>(
-            color: green,
-            onSelected: (item) => onSelected(context, item),
-            itemBuilder: (context) => [
-              PopupMenuItem<int>(
-                value: 0,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.person,
-                      color: white,
-                      size: 18,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "Kulanıcı bilgilerim",
-                      style: TextStyle(
-                        fontFamily: "poppins_light",
-                        fontSize: 14,
-                        color: white,
-                      ),
-                    ),
-                  ],
+        backgroundColor: white,
+        title: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => AddressPage(),
+              ),
+            );
+          },
+          child: Row(
+            children: [
+              Flexible(
+                flex: 3,
+                child: Text(
+                  "Adres Başlık",
+                  style: TextStyle(
+                      color: grey, fontFamily: "poppins-bold", fontSize: 16),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ),
-              PopupMenuItem<int>(
-                value: 0,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.location_city,
-                      color: white,
-                      size: 18,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "Adreslerim",
-                      style: TextStyle(
-                        fontFamily: "poppins_light",
-                        fontSize: 14,
-                        color: white,
-                      ),
-                    ),
-                  ],
+              Flexible(
+                flex: 1,
+                child: SizedBox(
+                  width: 8,
                 ),
               ),
-              PopupMenuItem<int>(
-                value: 0,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.lock,
-                      color: white,
-                      size: 18,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "Şifre değiştir",
-                      style: TextStyle(
-                        fontFamily: "poppins_light",
-                        fontSize: 14,
-                        color: white,
-                      ),
-                    ),
-                  ],
+              Flexible(
+                flex: 5,
+                child: Text(
+                  "adres ayrıntısı.. ",
+                  style: TextStyle(
+                      color: grey.withOpacity(0.5),
+                      fontFamily: "poppins",
+                      fontSize: 16),
                 ),
               ),
             ],
           ),
+        ),
+        actions: [
+          AspectRatio(
+            aspectRatio: 3 / 2,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+                color: green.withOpacity(0.6),
+              ),
+              child: PopupMenuButton<int>(
+                color: green,
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.person,
+                          color: white,
+                          size: 18,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Kulanıcı bilgilerim",
+                          style: TextStyle(
+                            fontFamily: "poppins_light",
+                            fontSize: 14,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_city,
+                          color: white,
+                          size: 18,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Adreslerim",
+                          style: TextStyle(
+                            fontFamily: "poppins_light",
+                            fontSize: 14,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.lock,
+                          color: white,
+                          size: 18,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Şifre değiştir",
+                          style: TextStyle(
+                            fontFamily: "poppins_light",
+                            fontSize: 14,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
-      body: Center(
-        child: Text(
-          "fsdfsd",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 32,
-              fontFamily: "poppins_bold"),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        color: white,
+        backgroundColor: green,
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                AspectRatio(
+                  aspectRatio: 14 / 12,
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    onMapCreated: _onMapCreated,
+                    onTap: (LatLng latLng) {
+                      UserPage.location = latLng.latitude.toString().substring(
+                              0, latLng.latitude.toString().indexOf(".") + 5) +
+                          " " +
+                          latLng.longitude.toString().substring(
+                              0, latLng.longitude.toString().indexOf(".") + 5);
+                      setState(() {
+                        _markers.add(Marker(
+                            markerId: const MarkerId('Service Location'),
+                            draggable: false,
+                            onTap: () {},
+                            position: latLng));
+                      });
+                    },
+                    markers: _markers,
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 12,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        color: white,
+                      ),
+                      child: _Search()),
+                ),
+                // ignore: prefer_const_constructors
+
+                Center(
+                  child: Text(
+                    "Siparischi",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        fontFamily: "poppins"),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -252,5 +371,119 @@ class _UserPageState extends State<UserPage> {
         );
         break;
     }
+  }
+
+  final Completer<GoogleMapController> _controller = Completer();
+  _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
+
+  final Set<Marker> _markers = {};
+  void setMarker(LatLng lng) {
+    setState(() {
+      _markers.add(Marker(
+          markerId: MarkerId('11'),
+          draggable: false,
+          onTap: () {},
+          position: lng));
+    });
+  }
+
+  Future<void> _refresh() {
+    setState(() {
+      refresh = true;
+    });
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const UserPage(),
+      ),
+      (route) => false,
+    );
+    return Future.delayed(const Duration(seconds: 1), () {});
+  }
+}
+
+class _Search extends StatefulWidget {
+  _Search({Key? key}) : super(key: key);
+
+  @override
+  __SearchState createState() => __SearchState();
+}
+
+class __SearchState extends State<_Search> {
+  late TextEditingController _editingController;
+
+  @override
+  void initState() {
+    super.initState();
+    _editingController = TextEditingController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _editingController,
+              // textAlignVertical: TextAlignVertical.center,
+              onChanged: (_) => setState(() {}),
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: TextStyle(color: green.withOpacity(0.6)),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+              ),
+            ),
+          ),
+          _editingController.text.trim().isEmpty
+              ? IconButton(
+                  icon: Icon(Icons.search, color: green.withOpacity(0.6)),
+                  onPressed: null)
+              : IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  icon: Icon(Icons.clear,
+                      color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                  onPressed: () => setState(
+                    () {
+                      _editingController.clear();
+                    },
+                  ),
+                ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyImageView extends StatelessWidget {
+  String imgPath;
+
+  MyImageView(this.imgPath);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: FittedBox(
+          fit: BoxFit.fill,
+          child: Container(
+            width: MediaQuery.of(context).size.width / 2.5,
+            height: MediaQuery.of(context).size.width / 2.5,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imgPath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ));
   }
 }

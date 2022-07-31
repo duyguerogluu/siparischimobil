@@ -4,7 +4,9 @@ import 'package:siparischi/decoration/colors.dart';
 import 'package:siparischi/forgotpassword_page.dart';
 import 'package:siparischi/pages/admin/admin_page.dart';
 import 'package:siparischi/pages/business/business_page.dart';
+import 'package:siparischi/pages/business/business_router.dart';
 import 'package:siparischi/pages/register/register_page.dart';
+import 'package:siparischi/pages/user/home_page_router.dart';
 import 'package:siparischi/pages/user/user_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -51,7 +53,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "Siparischi",
                   style: TextStyle(
-                      color: green, fontSize: 20, fontFamily: "poppins_bold"),
+                    color: green,
+                    fontSize: 20,
+                    fontFamily: "poppins_bold",
+                  ),
                 ),
               ),
               /*Container(
@@ -196,13 +201,14 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => const ForgotPasswordPage(),
+                              builder: (BuildContext context) =>
+                                  const ForgotPasswordPage(),
                             ),
-                                (route) => false,
+                            (route) => false,
                           );
                         },
                         child: Text(
@@ -217,13 +223,14 @@ class _LoginPageState extends State<LoginPage> {
                             color: green, fontFamily: "poppins_medium"),
                       ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => const RegisterPage(),
+                              builder: (BuildContext context) =>
+                                  const RegisterPage(),
                             ),
-                                (route) => false,
+                            (route) => false,
                           );
                         },
                         child: Text(
@@ -280,12 +287,16 @@ class _LoginPageState extends State<LoginPage> {
           );
           if (response.statusCode == 200) {
             if (response.body.toString() != "\"0\"") {
-              UserPage.token = response.body.toString().substring(response.body.toString().indexOf("-") + 1, response.body.toString().length-1);
-              UserPage.id = response.body.toString().substring(1,response.body.toString().indexOf("-"));
+              UserPage.token = response.body.toString().substring(
+                  response.body.toString().indexOf("-") + 1,
+                  response.body.toString().length - 1);
+              UserPage.id = response.body
+                  .toString()
+                  .substring(1, response.body.toString().indexOf("-"));
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => const UserPage(),
+                  builder: (BuildContext context) => const HomePageRouter(),
                 ),
                 (route) => false,
               );
@@ -297,16 +308,26 @@ class _LoginPageState extends State<LoginPage> {
                     "&password=" +
                     passwordController.text),
               );
+              print("Bağlanılıyor...");
               if (response.statusCode == 200) {
+                print("Başarılı...");
                 if (response.body.toString() != "\"0\"") {
+                  print("Giriş yapıldı...");
+                  BusinessPage.token = response.body.toString().substring(
+                      response.body.toString().indexOf("-") + 1,
+                      response.body.toString().length - 1);
+                  BusinessPage.id = response.body
+                      .toString()
+                      .substring(1, response.body.toString().indexOf("-"));
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => const BusinessPage(),
+                      builder: (BuildContext context) => const BusinessRouter(),
                     ),
                     (route) => false,
                   );
                 } else {
+                  print("Başarısız...");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: red,

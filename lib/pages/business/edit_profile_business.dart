@@ -171,11 +171,11 @@ class _EditProfileBusinessState extends State<EditProfileBusiness> {
                         TextStyle(color: black, fontFamily: "poppins_light"),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 2),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 1),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: green,
                     floatingLabelStyle: TextStyle(color: green),
@@ -204,11 +204,11 @@ class _EditProfileBusinessState extends State<EditProfileBusiness> {
                         TextStyle(color: black, fontFamily: "poppins_light"),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 2),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 1),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: green,
                     floatingLabelStyle: TextStyle(color: green),
@@ -237,11 +237,11 @@ class _EditProfileBusinessState extends State<EditProfileBusiness> {
                         TextStyle(color: black, fontFamily: "poppins_light"),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 2),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 1),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: green,
                     floatingLabelStyle: TextStyle(color: green),
@@ -270,11 +270,11 @@ class _EditProfileBusinessState extends State<EditProfileBusiness> {
                         TextStyle(color: black, fontFamily: "poppins_light"),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 2),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: green, width: 1),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: green,
                     floatingLabelStyle: TextStyle(color: green),

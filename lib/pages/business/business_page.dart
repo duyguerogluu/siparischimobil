@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:siparischi/decoration/colors.dart';
+import 'package:siparischi/pages/business/business_router.dart';
 import 'package:siparischi/pages/business/change_password_business.dart';
 import 'package:siparischi/pages/business/edit_profile_business.dart';
 import 'package:siparischi/pages/business/profile_page.dart';
@@ -8,7 +9,7 @@ import 'package:siparischi/pages/user/address_page.dart';
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({Key? key}) : super(key: key);
-
+  static String token = "", id = "";
   @override
   State<BusinessPage> createState() => _BusinessPageState();
 }
@@ -131,7 +132,8 @@ class _BusinessPageState extends State<BusinessPage> {
         centerTitle: true,
         title: Text(
           "Siparischi",
-          style: TextStyle(color: white, fontFamily: "poppins-bold"),
+          style:
+              TextStyle(color: white, fontFamily: "poppins_bold", fontSize: 24),
         ),
         actions: [
           PopupMenuButton<int>(
@@ -143,7 +145,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.person,
+                      Icons.add_box_rounded,
                       color: white,
                       size: 18,
                     ),
@@ -151,9 +153,56 @@ class _BusinessPageState extends State<BusinessPage> {
                       width: 8,
                     ),
                     Text(
-                      "İşletme bilgilerim",
+                      "Yeni Kategori",
                       style: TextStyle(
-                        fontFamily: "poppins_light",
+                        fontFamily: "poppins_medium",
+                        fontSize: 14,
+                        color: white,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem<int>(
+                value: 0,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.add_box_rounded,
+                      color: white,
+                      size: 18,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Yeni ürün",
+                      style: TextStyle(
+                        fontFamily: "poppins_medium",
+                        fontSize: 14,
+                        color: white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem<int>(
+                value: 0,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.business,
+                      color: white,
+                      size: 18,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Profili düzenle",
+                      style: TextStyle(
+                        fontFamily: "poppins_medium",
                         fontSize: 14,
                         color: white,
                       ),
@@ -166,7 +215,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.location_city,
+                      Icons.location_on,
                       color: white,
                       size: 18,
                     ),
@@ -174,9 +223,9 @@ class _BusinessPageState extends State<BusinessPage> {
                       width: 8,
                     ),
                     Text(
-                      "Adreslerim",
+                      "Adresim",
                       style: TextStyle(
-                        fontFamily: "poppins_light",
+                        fontFamily: "poppins_medium",
                         fontSize: 14,
                         color: white,
                       ),
@@ -199,7 +248,7 @@ class _BusinessPageState extends State<BusinessPage> {
                     Text(
                       "Şifre değiştir",
                       style: TextStyle(
-                        fontFamily: "poppins_light",
+                        fontFamily: "poppins_medium",
                         fontSize: 14,
                         color: white,
                       ),
